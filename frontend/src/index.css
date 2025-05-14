@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+/* h1 {
+  @apply text-red-500 bg-amber-300 text-center font-bold;
+} */
+
+:root {
+  --color-primary-500: #1ea398;
+  --color-primary-600: #016d75;
+  --color-accent-500: #f4da2b;
+  --color-accent-900: #faf9f5;
+  --color-info: #0ea5e9;
+}
+
+/* Page login */
+.bg-login {
+  background-color: var(--color-primary-600);
+}
+
+.bg-accent {
+  background-color: var(--color-accent-900);
+}
