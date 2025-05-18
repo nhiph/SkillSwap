@@ -22,12 +22,8 @@ import { useSearchContext } from "../../../contexts/searchContext";
 import { useState, useMemo } from "react";
 import { type Category, type Skill } from "../../../types/Search";
 
-const skillOptions = categories.map((cate) => cate.skills);
-console.log("skillOptions", skillOptions);
-
 const FilterSideBar = () => {
   const { filters, updateFilter, clearAllFilter } = useSearchContext();
-  console.log("FilterSideBar", filters);
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
   const selectedCategorieIds = useMemo(
     () => selectedCategories.map((itm) => itm.id),
@@ -37,10 +33,6 @@ const FilterSideBar = () => {
     let skillsFound: any = categories.find((cate) => cate.id === id)?.skills;
     return [...memo, ...skillsFound];
   }, []);
-
-  console.log("skillOptions", skillOptions);
-
-  console.log("selectedCategorieIds", selectedCategorieIds);
 
   const handleCheckbox = (event: any) => {
     const { name, value } = event.target;
@@ -174,14 +166,14 @@ const FilterSideBar = () => {
               popper: {
                 modifiers: [
                   {
-                    name: 'offset',
+                    name: "offset",
                     options: {
                       offset: [0, 8],
                     },
                   },
                 ],
                 sx: {
-                  '& .MuiAutocomplete-option': {
+                  "& .MuiAutocomplete-option": {
                     fontSize: "13px",
                   },
                 },
@@ -211,10 +203,31 @@ const FilterSideBar = () => {
             getOptionLabel={(option) => {
               return option?.text;
             }}
+            onChange={(event, newValue) => {
+              const ids = newValue.map((cate) => cate.id);
+              updateFilter("skills", ids);
+            }}
             renderInput={(params) => <TextField {...params} />}
             sx={{
               ".MuiOutlinedInput-root": {
                 padding: "4px 8px !important",
+              },
+            }}
+            slotProps={{
+              popper: {
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [0, 8],
+                    },
+                  },
+                ],
+                sx: {
+                  "& .MuiAutocomplete-option": {
+                    fontSize: "13px",
+                  },
+                },
               },
             }}
           />

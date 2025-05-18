@@ -13,7 +13,6 @@ import Dashboard from "./pages/Dashboard";
 import Detail from "./pages/Detail";
 import Profile from "./pages/Profile";
 import { useThemeStore, type ThemeMode } from "./contexts/mode";
-import { AuthProvider } from "./contexts/authContext";
 import { SearchProvider } from "./contexts/searchContext";
 
 function App() {
@@ -32,21 +31,17 @@ function App() {
   });
 
   return (
-    <BrowserRouter>
-      <ThemeProvider theme={appTheme}>
-        <CssBaseline />
-        <AuthProvider>
-          <SearchProvider>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/user-detail/:userId" element={<Detail />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
-          </SearchProvider>
-        </AuthProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+    <ThemeProvider theme={appTheme}>
+      <CssBaseline />
+      <SearchProvider>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/user-detail/:userId" element={<Detail />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </SearchProvider>
+    </ThemeProvider>
   );
 }
 

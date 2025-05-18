@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema({
   position: { type: String },
   age: { type: Number },
   workplace: { type: String },
-  avatar: { type: String }
+  avatar: { type: String },
+  gender: { type: String },
 });
 
 module.exports = mongoose.model("User", userSchema);

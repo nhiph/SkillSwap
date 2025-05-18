@@ -1,5 +1,4 @@
-import { Paper, Typography, TextField, Button } from "@mui/material";
-import MasterLayout from "./index";
+import { Paper, Typography, TextField, Button, Box } from "@mui/material";
 import { useAuthContext } from "../contexts/authContext";
 import { useState } from "react";
 import { type LoginData } from "../types/AuthInfo";
@@ -22,7 +21,14 @@ const Login = () => {
   };
 
   return (
-    <MasterLayout>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      className="w-full h-screen"
+    >
       <Paper elevation={3} className="p-8 w-full max-w-md dark:bg-gray-800">
         <div className="flex justify-between items-center mb-6">
           <Typography variant="h5" className="text-gray-800 dark:text-white">
@@ -52,7 +58,7 @@ const Login = () => {
           </Button>
         </form>
       </Paper>
-    </MasterLayout>
+    </Box>
   );
 };
 

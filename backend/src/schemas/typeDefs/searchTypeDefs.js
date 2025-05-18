@@ -25,17 +25,12 @@ module.exports = gql`
   }
 
   input UserSearchInput {
-    name: String
-    skill: String
-    bio: String
-    location: String
-    language: [String]
+    keywordSearch: String
+    age: String
     gender: String
-    email: String
-    position: String
-    age: Int
-    workplace: String
-    experiences: String
+    categories: [String]
+    skills: [String]
+    languages: [String]
   }
 
   type Query {

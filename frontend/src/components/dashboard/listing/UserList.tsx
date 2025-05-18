@@ -26,9 +26,9 @@ const UserList = () => {
 
               <div className="mt-[5px] w-[160px] text-[14px] text-[#575859] leading-tight text-center space-y-0">
                 <div className="font-semibold truncate">{user.position}</div>
-                {/* <div className="text-[13px] font-light truncate">
-                    {user.bio}
-                  </div> */}
+                <div className="text-[13px] font-light truncate">
+                  {user.bio}
+                </div>
               </div>
             </div>
             <div className="mt-4 mb-3 absolute bottom-3">

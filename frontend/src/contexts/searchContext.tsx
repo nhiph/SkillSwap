@@ -10,7 +10,6 @@ import * as searchService from "../services/searchService";
 
 interface InputFilters {
   keywordSearch?: string;
-  bio?: string;
   languages?: Array<string | undefined>;
   gender?: string;
   age?: string;
@@ -44,10 +43,11 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
 
   // Fetch users whenever filters change
   useEffect(() => {
-    console.log("useEffect");
+    console.log("useEffect filterChanges");
     const fetchUsers = async () => {
       setLoading(true);
       try {
+        console.log('FEFE', filters)
         const response = await searchService.searchUsers(filters);
         setUsers(response?.searchUsers);
       } catch (error) {
@@ -61,7 +61,6 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
   }, [filters]);
 
   const updateFilter = (name: string, value: any) => {
-    console.log("aaaaaaaaaaaaaaaaaaaa updateFilter", { name, value });
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
 

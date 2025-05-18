@@ -3,57 +3,49 @@ const User = require("../../models/User");
 const resolvers = {
   Query: {
     searchUsers: async (_, { filters }) => {
-      const users = await User.find()
-      return users.filter((user) => {
-        const matchName = filters?.name
-          ? user.name.toLowerCase().includes(filters.name.toLowerCase())
-          : true;
+      const query = {};
 
-        const matchSkill = filters?.skill
-          ? user.skills.some((skill) =>
-              skill.toLowerCase().includes(filters.skill.toLowerCase())
-            )
-          : true;
+      // Keyword search in name, bio, position, or workplace
+      if (filters.keywordSearch) {
+        const regex = new RegExp(filters.keywordSearch, "i");
+        query.$or = [
+          { name: regex },
+          { bio: regex },
+          { position: regex },
+          { workplace: regex },
+        ];
+      }
 
-        const matchBio = filters?.bio
-          ? user.bio?.toLowerCase().includes(filters.bio.toLowerCase())
-          : true;
+      // Age (as string input)
+      if (filters.age) {
+        const ageNumber = parseInt(filters.age, 10);
+        if (!isNaN(ageNumber)) {
+          query.age = ageNumber;
+        }
+      }
 
-        const matchLocation = filters?.location
-          ? user.location?.some((loc) =>
-              loc.toLowerCase().includes(filters.location.toLowerCase())
-            )
-          : true;
+      // Gender (exact match, case-insensitive)
+      if (filters.gender) {
+        query.gender = new RegExp(`^${filters.gender}$`, "i");
+      }
 
-        const matchLanguage = filters?.language
-          ? user.language?.some((lang) =>
-              lang.toLowerCase().includes(filters.language.toLowerCase())
-            )
-          : true;
+      // Skills (skills the user teaches)
+      if (filters.skills?.length) {
+        query.skills = { $in: filters.skills };
+      }
 
-        const matchGender = filters?.gender
-          ? user.gender?.toLowerCase().includes(filters.gender.toLowerCase())
-          : true;
+      // Categories (same as skillsToLearn?)
+      if (filters.categories?.length) {
+        query.skillsToLearn = { $in: filters.categories };
+      }
 
-        const matchExperience = filters?.experiences
-          ? user.experiences?.some((exp) =>
-              [exp.description, exp.role]
-                .join(" ")
-                .toLowerCase()
-                .includes(filters.experiences.toLowerCase())
-            )
-          : true;
+      // Languages
+      if (filters.languages?.length) {
+        query.language = { $in: filters.languages };
+      }
 
-        return (
-          matchName &&
-          matchSkill &&
-          matchBio &&
-          matchLocation &&
-          matchLanguage &&
-          matchGender &&
-          matchExperience
-        );
-      });
+      const users = await User.find(query);
+      return users;
     },
   },
 };

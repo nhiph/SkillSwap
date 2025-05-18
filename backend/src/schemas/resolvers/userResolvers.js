@@ -68,6 +68,7 @@ const resolvers = {
       const token = generateToken(user._id);
       return { token, user };
     },
+  
     updateUser: async (
       _,
       {

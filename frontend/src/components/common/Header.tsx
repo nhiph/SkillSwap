@@ -1,5 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 import AccountSettings from "../users/AccountSettings";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const categories = [
@@ -12,7 +13,11 @@ const Header = () => {
   const renderCategories = () => {
     return categories.map((cate) => {
       return (
-        <Typography key={cate.id} variant="subtitle1" sx={{ cursor: "pointer" }}>
+        <Typography
+          key={cate.id}
+          variant="subtitle1"
+          sx={{ cursor: "pointer" }}
+        >
           {cate.text}
         </Typography>
       );
@@ -24,18 +29,20 @@ const Header = () => {
       className="py-2 px-10 text-center flex items-center justify-between"
       style={{
         background: "#F4F4F4",
-        borderBottom: '1px solid #e4eaec',
+        borderBottom: "1px solid #e4eaec",
       }}
     >
-      <Typography
-      fontWeight="bold"
-        variant="h5"
-        sx={{
-          color: "#2f7da7",
-        }}
-      >
-        SkillSwap
-      </Typography>
+      <Link to="/dashboard">
+        <Typography
+          fontWeight="bold"
+          variant="h5"
+          sx={{
+            color: "#2f7da7",
+          }}
+        >
+          SkillSwap
+        </Typography>
+      </Link>
       <Stack
         direction="row"
         alignItems="center"

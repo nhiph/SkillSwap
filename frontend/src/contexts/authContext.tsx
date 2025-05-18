@@ -26,32 +26,39 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const [user, setUser] = useState<User | null>(null);
   const isAuthenticated = !!user?.id;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetchProfile();
+      fetchProfile().finally(() => setLoading(false));
+    } else {
+      setLoading(false);
     }
   }, []);
 
   useEffect(() => {
+    if (loading) return; // Wait for profile to load before doing anything
+  
     const currentPath = location.pathname;
+  
     if (!isAuthenticated) {
-      navigate("/");
+      if (currentPath !== "/") navigate("/");
       return;
     }
+  
+    // Only redirect if user lands on root path
     if (currentPath === "/") {
       navigate("/dashboard");
-    } else if (currentPath !== "/") {
-      navigate(currentPath);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, loading]);
 
   const login = async (value: LoginData) => {
     try {
       const response = await authService.login(value);
       await localStorage.setItem("token", response.token);
       fetchProfile();
+      navigate("/dashboard");
     } catch (err) {
       console.log("login err", err);
     }
@@ -68,7 +75,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = async () => {
     localStorage.clear();
-    await authService.logout();
     setUser(null);
   };
 
@@ -76,6 +82,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await authService.register();
   };
 
+  if (loading) return null;
+  
   return (
     <AuthContext.Provider
       value={{ user, isAuthenticated, login, logout, register, fetchProfile }}

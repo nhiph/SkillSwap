@@ -8,12 +8,17 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
-import { RiArrowDropDownFill, RiArrowDropUpFill, RiNotification2Line } from "@remixicon/react";
+import {
+  RiArrowDropDownFill,
+  RiArrowDropUpFill,
+  RiNotification2Line,
+} from "@remixicon/react";
 import Badge from "@mui/material/Badge";
 import { useAuthContext } from "../../contexts/authContext";
+import { Link } from "react-router-dom";
 
 const AccountSettings = () => {
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
 
   const [avatarEl, setAvatarEl] = React.useState<HTMLButtonElement | null>(
     null
@@ -88,11 +93,13 @@ const AccountSettings = () => {
         }}
       >
         <List disablePadding>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="Your Profile" />
-            </ListItemButton>
-          </ListItem>
+          <Link to="/profile">
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemText primary="Your Profile" />
+              </ListItemButton>
+            </ListItem>
+          </Link>
           <Divider />
           <ListItem disablePadding>
             <ListItemButton>
@@ -100,9 +107,9 @@ const AccountSettings = () => {
             </ListItemButton>
           </ListItem>
           <Divider />
-          <ListItem disablePadding>
+          <ListItem disablePadding onClick={logout}>
             <ListItemButton>
-              <ListItemText primary="Log out" />
+              <ListItemText primary="Logout" />
             </ListItemButton>
           </ListItem>
         </List>
@@ -118,16 +125,21 @@ const AccountSettings = () => {
           horizontal: "left",
         }}
       >
-        <List disablePadding sx={{ width: '100%', maxWidth: 200, bgcolor: 'background.paper' }}>
+        <List
+          disablePadding
+          sx={{ width: "100%", maxWidth: 200, bgcolor: "background.paper" }}
+        >
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemText primary={`You have a request from ${'Nhi Phung'}`} />
+              <ListItemText
+                primary={`You have a request from ${"Nhi Phung"}`}
+              />
             </ListItemButton>
           </ListItem>
 
           <ListItem disablePadding>
             <ListItemButton>
-              <ListItemText primary={`You have a request from ${'Binh Cao'}`} />
+              <ListItemText primary={`You have a request from ${"Binh Cao"}`} />
             </ListItemButton>
           </ListItem>
         </List>
