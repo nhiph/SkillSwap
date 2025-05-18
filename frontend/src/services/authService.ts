@@ -1,9 +1,9 @@
 import client from "../apollo/client";
 import { LOGIN_MUTATION, LOGOUT_MUTATION, REGISTER_MUTATION, PROFILE_QUERY } from "../graphql/auth/index";
-import { type LoginData } from "../types/AuthInfo";
+import { type AuthFormData } from "../types/AuthInfo";
 
 export const login = async (
-    value: LoginData
+    value: AuthFormData
 ): Promise<any> => {
     const { data } = await client.mutate({
         mutation: LOGIN_MUTATION,
@@ -21,6 +21,6 @@ export const logout = async (): Promise<void> => {
     await client.mutate({ mutation: LOGOUT_MUTATION });
 };
 
-export const register = async (): Promise<void> => {
-    await client.mutate({ mutation: REGISTER_MUTATION });
+export const register = async (value: AuthFormData): Promise<void> => {
+    await client.mutate({ mutation: REGISTER_MUTATION, variables: { value } });
 };

@@ -15,25 +15,24 @@ const resolvers = {
   Mutation: {
     register: async (
       _,
-      {
+      args
+    ) => {
+      console.log('AAAAAAAA', args)
+      const hashed = await bcrypt.hash(password, 10);
+      const activationToken = generateToken(email); // Token for email activation
+      const {
         name,
         email,
         password,
         skills,
         skillsToLearn,
         bio,
-        avatar,
-        location,
         language,
-        experiences,
-        pronouns,
         position,
         age,
         workplace,
-      }
-    ) => {
-      const hashed = await bcrypt.hash(password, 10);
-      const activationToken = generateToken(email); // Token for email activation
+        gender
+      } = args
       const user = await User.create({
         name,
         email,
@@ -42,19 +41,16 @@ const resolvers = {
         skillsToLearn,
         bio,
         activationToken,
-        avatar,
-        location,
         language,
-        experiences,
-        pronouns,
         position,
         age,
         workplace,
+        gender
       });
 
       // Send activation email (you need to implement this function)
-      await sendActivationEmail(user.email, activationToken);
-
+      // await sendActivationEmail(user.email, activationToken);
+      console.log('BEBEBEBEBEBEBEBE')
       return { token: generateToken(user._id), user };
     },
     login: async (_, { email, password }) => {

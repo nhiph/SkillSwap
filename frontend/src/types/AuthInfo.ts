@@ -1,6 +1,18 @@
-export type LoginData = {
-    email: string
-    password: string
+export type AuthFormData = {
+    email: string;
+    password: string;
+    name?: string;
+    major?: string;
+    position?: string;
+    skills?: string[];
+    skillsToLearn?: string[];
+    bio?: string;
+    avatar?: string;
+    pronouns?: string,
+    workplace?: string,
+    gender?: string,
+    age?: string,
+    industry?: string,
 }
 
 type Experience = {

@@ -7,14 +7,14 @@ import {
 } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import * as authService from "../services/authService";
-import { type LoginData, type User } from "../types/AuthInfo";
+import { type AuthFormData, type User } from "../types/AuthInfo";
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (data: LoginData) => Promise<void>;
+  login: (data: AuthFormData) => Promise<void>;
   logout: () => Promise<void>;
-  register: () => Promise<void>;
+  register: (data: AuthFormData) => Promise<void>;
   fetchProfile: () => Promise<void>;
 }
 
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [isAuthenticated, loading]);
 
-  const login = async (value: LoginData) => {
+  const login = async (value: AuthFormData) => {
     try {
       const response = await authService.login(value);
       await localStorage.setItem("token", response.token);
@@ -78,8 +78,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUser(null);
   };
 
-  const register = async () => {
-    await authService.register();
+  const register = async (value: AuthFormData) => {
+    await authService.register(value);
   };
 
   if (loading) return null;

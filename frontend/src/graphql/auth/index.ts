@@ -15,10 +15,9 @@ export const LOGOUT_MUTATION = gql`
 `;
 
 export const REGISTER_MUTATION = gql`
-  mutation Register($input: RegisterInput!) {
+  mutation Register($input: any!) {
     register(input: $input) {
       id
-      name
       token
     }
   }
