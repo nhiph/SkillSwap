@@ -8,6 +8,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import * as authService from "../services/authService";
 import { type AuthFormData, type User } from "../types/AuthInfo";
+import { useParams } from "react-router-dom";
 
 interface AuthContextType {
   user: User | null;
@@ -23,6 +24,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  let { activationToken } = useParams();
 
   const [user, setUser] = useState<User | null>(null);
   const isAuthenticated = !!user?.id;
@@ -43,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const currentPath = location.pathname;
 
     if (!isAuthenticated) {
-      if (currentPath !== "/") navigate("/");
+      if (currentPath === "/" && !activationToken) navigate("/");
       return;
     }
 

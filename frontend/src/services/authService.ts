@@ -22,13 +22,11 @@ export const logout = async (): Promise<void> => {
 };
 
 export const register = async (value: AuthFormData): Promise<any> => {
-    console.log('FEFEFE', value)
     const data = await client.mutate({ mutation: REGISTER_MUTATION, variables: value });
     return data
 };
 
 
-export const activateUser = async (token: String) => {
-    console.log('activateUser', token)
-    await client.mutate({ mutation: ACTIVATE_MUTATION, variables: token });
+export const activateUser = async (activationToken: String) => {
+    await client.mutate({ mutation: ACTIVATE_MUTATION, variables: { activationToken } });
 };

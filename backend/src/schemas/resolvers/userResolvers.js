@@ -53,6 +53,7 @@ const resolvers = {
       return { token: '123', user }; // neu chua activate => token van null
     },
     activateUser: async (_, { activationToken }) => {
+      console.log('activationToken', activationToken)
       const user = await User.findOne({ activationToken });
       if (!user) throw new Error("Token không hợp lệ");
 
@@ -119,7 +120,9 @@ const resolvers = {
       return true;
     },
     activateUser: async (_, { activationToken }) => {
+      console.log('activationToken', activationToken)
       const user = await User.findOne({ activationToken });
+      console.log('user', user)
       if (!user) throw new Error("Invalid or expired activation token.");
 
       // Set the user as active
