@@ -106,6 +106,11 @@ const FilterSideBar = () => {
     updateFilter(name, value);
   };
 
+  const handleClearAll = () => {
+    clearAllFilter();
+    setSelectedCategories([]);
+  };
+
   return (
     <Stack
       sx={{
@@ -127,7 +132,7 @@ const FilterSideBar = () => {
         className="w-full"
       >
         <Typography>Search</Typography>
-        <Button size="small" variant="outlined" onClick={clearAllFilter}>
+        <Button size="small" variant="outlined" onClick={handleClearAll}>
           Clear All
         </Button>
       </Stack>

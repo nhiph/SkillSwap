@@ -13,13 +13,7 @@ const resolvers = {
     getUser: async (_, { id }) => await User.findById(id),
   },
   Mutation: {
-    register: async (
-      _,
-      args
-    ) => {
-      console.log('AAAAAAAA', args)
-      const hashed = await bcrypt.hash(password, 10);
-      const activationToken = generateToken(email); // Token for email activation
+    register: async (_, args) => {
       const {
         name,
         email,
@@ -31,8 +25,10 @@ const resolvers = {
         position,
         age,
         workplace,
-        gender
-      } = args
+        gender,
+      } = args;
+      const hashed = await bcrypt.hash(password, 10);
+      const activationToken = generateToken(email);
       const user = await User.create({
         name,
         email,
@@ -40,31 +36,44 @@ const resolvers = {
         skills,
         skillsToLearn,
         bio,
-        activationToken,
         language,
         position,
         age,
         workplace,
-        gender
+        gender,
+        avatar:
+          "https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1",
+        isActive: false,
+        activationToken,
       });
 
       // Send activation email (you need to implement this function)
-      // await sendActivationEmail(user.email, activationToken);
-      console.log('BEBEBEBEBEBEBEBE')
-      return { token: generateToken(user._id), user };
+      await sendActivationEmail(user.email, activationToken);
+      // return { token: generateToken(user._id), user };
+      return { token: null, user }; // neu chua activate => token van null
+    },
+    activateUser: async (_, { activationToken }) => {
+      const user = await User.findOne({ activationToken });
+      if (!user) throw new Error("Token không hợp lệ");
+
+      user.isActive = true;
+      user.activationToken = undefined;
+      await user.save();
+
+      return true;
     },
     login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
       if (!user || !(await bcrypt.compare(password, user.password))) {
         throw new Error("Invalid credentials");
       }
-      // if (!user.isActive) {
-      //   throw new Error("Account not activated. Please check your email.");
-      // }
+      if (!user.isActive) {
+        throw new Error("Account not activated. Please check your email.");
+      }
       const token = generateToken(user._id);
       return { token, user };
     },
-  
+
     updateUser: async (
       _,
       {

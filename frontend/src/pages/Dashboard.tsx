@@ -1,11 +1,14 @@
-import { Stack } from "@mui/material";
+import { Stack, Box, CircularProgress } from "@mui/material";
 import banner from "../assets/banner.svg";
 import MasterLayout from "./index";
 import FilterSideBar from "../components/dashboard/filter-sidebar/index";
 import UserList from "../components/dashboard/listing/UserList";
 import UserCount from "../components/dashboard/listing/UserCount";
+import { useSearchContext } from "../contexts/searchContext";
 
 const Dashboard = () => {
+  const { loading } = useSearchContext();
+
   return (
     <MasterLayout>
       <img src={banner} />
@@ -25,7 +28,13 @@ const Dashboard = () => {
           >
             <UserCount />
           </Stack>
-          <UserList />
+          {loading ? (
+            <Stack sx={{ display: "flex", alignItems: "center" }}>
+              <CircularProgress />
+            </Stack>
+          ) : (
+            <UserList />
+          )}
         </Stack>
       </Stack>
     </MasterLayout>

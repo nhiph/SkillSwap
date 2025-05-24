@@ -16,14 +16,6 @@ const resolvers = {
         ];
       }
 
-      // Age (as string input)
-      if (filters.age) {
-        const ageNumber = parseInt(filters.age, 10);
-        if (!isNaN(ageNumber)) {
-          query.age = ageNumber;
-        }
-      }
-
       // Gender (exact match, case-insensitive)
       if (filters.gender) {
         query.gender = new RegExp(`^${filters.gender}$`, "i");

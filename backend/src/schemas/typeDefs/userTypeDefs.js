@@ -30,6 +30,7 @@ module.exports = gql`
   type AuthPayload {
     token: String!
     user: User!
+    id: String
   }
 
   type Query {
@@ -52,7 +53,9 @@ module.exports = gql`
       isActive: Boolean
       pronouns: String
       position: String
-      age: Int
+      age: String
+      gender: String
+      industry: String
       workplace: String
     ): AuthPayload
     login(email: String!, password: String!): AuthPayload
@@ -67,6 +70,6 @@ module.exports = gql`
       language: [String]
     ): User
     deleteUser(id: ID!): Boolean
-    activateUser(activationToken: String!): Boolean
+    activateUser(activationToken: String!): Boolean!
   }
 `;

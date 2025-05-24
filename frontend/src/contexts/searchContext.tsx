@@ -47,7 +47,6 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        console.log('FEFE', filters)
         const response = await searchService.searchUsers(filters);
         setUsers(response?.searchUsers);
       } catch (error) {

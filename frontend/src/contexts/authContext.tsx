@@ -39,14 +39,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (loading) return; // Wait for profile to load before doing anything
-  
+
     const currentPath = location.pathname;
-  
+
     if (!isAuthenticated) {
       if (currentPath !== "/") navigate("/");
       return;
     }
-  
+
     // Only redirect if user lands on root path
     if (currentPath === "/") {
       navigate("/dashboard");
@@ -79,11 +79,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const register = async (value: AuthFormData) => {
-    await authService.register(value);
+    try {
+      const response = await authService.register(value);
+      await localStorage.setItem("token", response.data.register.token);
+      await fetchProfile();
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("Error: ", err);
+    }
   };
 
   if (loading) return null;
-  
+
   return (
     <AuthContext.Provider
       value={{ user, isAuthenticated, login, logout, register, fetchProfile }}

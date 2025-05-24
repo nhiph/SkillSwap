@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   location: { type: String },
   pronouns: { type: String },
   position: { type: String },
-  age: { type: Number },
+  age: { type: String },
   workplace: { type: String },
   avatar: { type: String },
   gender: { type: String },

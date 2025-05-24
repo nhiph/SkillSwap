@@ -15,8 +15,36 @@ export const LOGOUT_MUTATION = gql`
 `;
 
 export const REGISTER_MUTATION = gql`
-  mutation Register($input: any!) {
-    register(input: $input) {
+  mutation Register( 
+    $email: String!,
+    $password: String!,
+    $name: String!,
+    $position: String,
+    $skills: [String!],
+    $skillsToLearn: [String!],
+    $bio: String,
+    $avatar: String,
+    $pronouns: String,
+    $workplace: String,
+    $gender: String,
+    $age: String,
+    $industry: String,
+  ) {
+    register(
+      email: $email,
+    password: $password,
+    name: $name,
+    position: $position,
+    skills: $skills,
+    skillsToLearn: $skillsToLearn,
+    bio: $bio,
+    avatar: $avatar,
+    pronouns: $pronouns,
+    workplace: $workplace,
+    gender: $gender,
+    age: $age,
+    industry: $industry,
+    ) {
       id
       token
     }

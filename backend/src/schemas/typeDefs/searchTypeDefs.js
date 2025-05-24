@@ -11,7 +11,7 @@ module.exports = gql`
     id: ID!
     name: String!
     email: String!
-    age: Int
+    age: String
     avatar: String
     skills: [String!]!
     position: String

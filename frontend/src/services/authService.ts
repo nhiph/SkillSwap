@@ -21,6 +21,8 @@ export const logout = async (): Promise<void> => {
     await client.mutate({ mutation: LOGOUT_MUTATION });
 };
 
-export const register = async (value: AuthFormData): Promise<void> => {
-    await client.mutate({ mutation: REGISTER_MUTATION, variables: { value } });
+export const register = async (value: AuthFormData): Promise<any> => {
+    console.log('FEFEFE', value)
+    const data = await client.mutate({ mutation: REGISTER_MUTATION, variables: value });
+    return data
 };

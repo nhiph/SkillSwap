@@ -15,7 +15,7 @@ const UserList = () => {
               <div className="w-full relative">
                 <div className="w-full h-[60px] bg-[#2f7da7]" />
                 <img
-                  src={user.avatar}
+                  src={user.avatar || 'https://i0.wp.com/digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png?fit=500%2C500&ssl=1'}
                   className="absolute top-[25px] left-1/2 -translate-x-1/2 w-[90px] h-[90px] rounded-full object-cover"
                 />
               </div>
