@@ -50,7 +50,7 @@ const resolvers = {
       // Send activation email (you need to implement this function)
       await sendActivationEmail(user.email, activationToken);
       // return { token: generateToken(user._id), user };
-      return { token: null, user }; // neu chua activate => token van null
+      return { token: '123', user }; // neu chua activate => token van null
     },
     activateUser: async (_, { activationToken }) => {
       const user = await User.findOne({ activationToken });

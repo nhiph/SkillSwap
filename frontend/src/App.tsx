@@ -7,13 +7,14 @@ import {
   useMediaQuery,
   CssBaseline,
 } from "@mui/material";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Detail from "./pages/Detail";
 import Profile from "./pages/Profile";
 import { useThemeStore, type ThemeMode } from "./contexts/mode";
 import { SearchProvider } from "./contexts/searchContext";
+import ActivationToken from "./pages/ActivationToken";
 
 function App() {
   const { mode, setMode } = useThemeStore();
@@ -39,6 +40,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/user-detail/:userId" element={<Detail />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/activate/:activationToken" element={<ActivationToken />} />
         </Routes>
       </SearchProvider>
     </ThemeProvider>

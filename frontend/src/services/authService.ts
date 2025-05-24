@@ -1,5 +1,5 @@
 import client from "../apollo/client";
-import { LOGIN_MUTATION, LOGOUT_MUTATION, REGISTER_MUTATION, PROFILE_QUERY } from "../graphql/auth/index";
+import { LOGIN_MUTATION, LOGOUT_MUTATION, REGISTER_MUTATION, PROFILE_QUERY, ACTIVATE_MUTATION } from "../graphql/auth/index";
 import { type AuthFormData } from "../types/AuthInfo";
 
 export const login = async (
@@ -25,4 +25,10 @@ export const register = async (value: AuthFormData): Promise<any> => {
     console.log('FEFEFE', value)
     const data = await client.mutate({ mutation: REGISTER_MUTATION, variables: value });
     return data
+};
+
+
+export const activateUser = async (token: String) => {
+    console.log('activateUser', token)
+    await client.mutate({ mutation: ACTIVATE_MUTATION, variables: token });
 };

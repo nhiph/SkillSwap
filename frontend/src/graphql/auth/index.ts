@@ -77,3 +77,9 @@ export const PROFILE_QUERY = gql`
     }
 }
 `
+
+export const ACTIVATE_MUTATION = gql`
+  mutation Activate($activationToken: String!) {
+    activateUser(activationToken: $activationToken)
+  }
+`;
